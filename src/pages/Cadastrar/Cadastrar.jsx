@@ -10,35 +10,24 @@ const Cadastrar = () => {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
 
-  const  {error} = React.useContext(UserContext)
+  const  {error, cadastrarUsuario} = React.useContext(UserContext)
 
-
-  async function cadastrarUsuario(event) {
+  async function cadastrar(event) {
     event.preventDefault()
-    try {
-      const cadastro = await fetch("http://localhost:3333/users", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({name, email, password})
-      })
-      console.log(cadastro)
-    } catch (error) {
-      console.log('erro')
-    } finally {
-      console.log('aqui')
-    }
+    await cadastrarUsuario(name, email, password)
+
   }
 
 
+
+
   return (
-    <FormStyles onSubmit={cadastrarUsuario}>
+    <FormStyles onSubmit={cadastrar}>
       <Titulo>Cadastro</Titulo>
       <Input name="nome" type="text" label="Nome" value={name} onChange={({target}) => setName(target.value)}/>
       <Input name="email" type="text" label="Email" value={email} onChange={({target}) => setEmail(target.value)}/>
-      {error && <p>{error}</p>}
       <Input name="password" type="password" label="Senha" value={password} onChange={({target}) => setPassword(target.value)}/>
+      {error && <p>{error}</p>}
       <Button>Cadastrar</Button>
     </FormStyles>
   )

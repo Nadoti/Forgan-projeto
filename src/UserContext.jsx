@@ -13,6 +13,23 @@ export const UserStorage = ({ children }) => {
 
   const navigate = useNavigate()
 
+  async function cadastrarUsuario(name, email, password) {
+    try {
+      setError(null)
+      const cadastro = await fetch("http://localhost:3333/users", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({name, email, password})
+      })
+      if(!cadastro.ok) setError('Email ja cadastrado')
+    } catch (error) {
+      console.log('eeee')
+      setError(error)
+    }
+  }
+
 
   
 
@@ -20,11 +37,10 @@ export const UserStorage = ({ children }) => {
     try {
       setError(null)
       setLoading(true)
-      console.log(email, password)
+      
       const login = await axios.post("http://localhost:3333/sessions", {email, password})
-      console.log(login)
       const {token, user } = login.data
-      console.log(token, user)
+      
       setLogin(true)
       localStorage.setItem('token', token)
       localStorage.setItem('user', user.name)
@@ -59,7 +75,7 @@ export const UserStorage = ({ children }) => {
 
 
   return (
-    <UserContext.Provider value={{logarUsuario, dados, loading, error, deslogarUsuario, login}}>
+    <UserContext.Provider value={{logarUsuario, dados, loading, error, deslogarUsuario, login, cadastrarUsuario}}>
       {children}
     </UserContext.Provider>
   )
