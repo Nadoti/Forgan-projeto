@@ -13,6 +13,7 @@ export const UserStorage = ({ children }) => {
 
   const navigate = useNavigate()
 
+
   
 
   async function logarUsuario(email, password) {

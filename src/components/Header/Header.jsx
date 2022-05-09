@@ -7,6 +7,7 @@ const Header = () => {
   
   const { dados, deslogarUsuario, login} = React.useContext(UserContext)
 
+
   return (
     <HeaderStyles>
       <Content>
@@ -16,7 +17,7 @@ const Header = () => {
             <li><Link to="/">Home</Link></li>
             <li><Link to="topicos">Tópicos</Link></li>
             {dados 
-              ? (<Link to="usuario" className='btn_login'>{dados}</Link>)
+              ? (<Link to="/" className='btn_login'>{dados}</Link>)
               : (<Link to="login" className='btn_login'>Sign In</Link>)
             }
             {login && <Deslogar onClick={deslogarUsuario}>Deslogar</Deslogar>}

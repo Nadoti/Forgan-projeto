@@ -2,7 +2,6 @@ import React from 'react'
 import { Content, NovoTopico, Titulo, Button, Posts, PostsContainer, FecharModal } from './styles'
 import Modal from 'react-modal';
 import Input from '../../Forms/Input/Input'
-import { api } from '../../../service/api';
 
 const TopicoComLogin = () => {
   const [novoTopicoModalOpen, setNovoTopicoModalOpen] = React.useState(false)
@@ -11,10 +10,6 @@ const TopicoComLogin = () => {
 
   const [titulo, setTitulo] = React.useState('')
   const [conteudo, setConteudo] = React.useState('')
-
-  React.useEffect(() => {
-    api.get("http://localhost:3000/api/postars").then(json => setResultadoPosts(json.data.posta))
-  }, [])
 
   function openModal() {
     setNovoTopicoModalOpen(true)
@@ -27,20 +22,10 @@ const TopicoComLogin = () => {
 
   async function handlePostar() {
     const usuario = window.localStorage.getItem('user')
-    const dados = {
-      usuario, titulo, conteudo
-    }
-    const response = await api.post('postars', {
-      ...resultadoPosts, dados
-    })
-    const { posta } = response.data
-    const {usuario: user, titulo: title, conteudo: info} = posta.dados
-    window.localStorage.setItem('posts', [{user, title, info}])
-    setResultadoPosts([...resultadoPosts,posta.dados])
-    const teste = window.localStorage.getItem('posts')
-    console.log(JSON.stringify(teste))
+    setResultadoPosts([...resultadoPosts,{usuario, titulo, conteudo}])
     closeModal(false)
   }
+  
 
   return (
     <section>
